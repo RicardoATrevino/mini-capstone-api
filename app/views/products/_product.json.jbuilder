@@ -7,3 +7,4 @@ json.total product.total
 json.image_url product.image_url
 json.description product.description
 json.created_at product.created_at
+json.supplier_id  product.supplier_id
