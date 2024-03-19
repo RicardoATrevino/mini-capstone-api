@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   delete "/products/:id" => "products#destroy"
 
+  post "/users" => "users#create"
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")

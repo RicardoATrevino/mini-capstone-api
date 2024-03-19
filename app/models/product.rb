@@ -5,10 +5,6 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :description, length: { in: 1..500 }
 
-  def supplier
-    Supplier.find_by(id: supplier_id)
-  end
-
   def tax
     price * 0.09
   end
