@@ -9,23 +9,30 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_equal Product.count, data.length
   end
 
-  test "create" do
-    assert_difference "Product.count", 1 do
-      post "/products.json", params: { name: "test product", price: 1, image_url: "image.jpg", description: "test description" }
-    end
-    assert_difference "Product.count", 0 do
-      post "/products.json", params: {}
-      data = JSON.parse(response.body)
-      assert_response 422
-    end
-  end
-
   test "show" do
     get "/products/#{Product.first.id}.json"
     assert_response 200
 
     data = JSON.parse(response.body)
-    assert_equal ["created_at", "description", "id", "image_url", "is_discounted?", "name", "price", "supplier_id", "tax", "total"].sort, data.keys.sort
+    assert_equal ["id", "name", "price", "description", "created_at", "updated_at", "is_discounted?", "tax", "total", "supplier", "images", "primary_image"], data.keys
+  end
+
+  test "create" do
+    assert_difference "Product.count", 1 do
+      post "/products.json", params: { supplier_id: Supplier.first.id, price: 1, name: "test product", description: "test description", image_url: "image.jpg" }
+      data = JSON.parse(response.body)
+      assert_response 200
+      refute_nil data["id"]
+      assert_equal "test product", data["name"]
+      assert_equal "1.0", data["price"]
+      assert_equal "test description", data["description"]
+    end
+
+    assert_difference "Product.count", 0 do
+      post "/products.json", params: {}
+      data = JSON.parse(response.body)
+      assert_response 422
+    end
   end
 
   test "update" do
@@ -35,8 +42,10 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     data = JSON.parse(response.body)
     assert_equal "Updated name", data["name"]
+    assert_equal product.price.to_s, data["price"]
+    assert_equal product.description, data["description"]
 
-    patch "/products/#{product.id}.json", params: { price: -11 }
+    patch "/products/#{product.id}.json", params: { price: -100 }
     assert_response 422
   end
 
