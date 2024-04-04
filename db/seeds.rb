@@ -28,6 +28,7 @@ Image.create!(product_id: 4, url: "http://cdn.shopify.com/s/files/1/0289/1534/pr
 Image.create!(product_id: 5, url: "https://s-media-cache-ak0.pinimg.com/736x/9c/15/7b/9c157bea5331463f9c539cbce739a4b8.jpg")
 Image.create!(product_id: 6, url: "https://createsketchfab.com/blogs/community/wp-content/uploads/2020/04/image2-2.jpg")
 Image.create!(product_id: 7, url: "https://staticdelivery.nexusmods.com/mods/1151/images/12353-0-1461721930.png")
+
 Category.create!(name: "Weapons")
 Category.create!(name: "Star Wars")
 Category.create!(name: "Household goods")
